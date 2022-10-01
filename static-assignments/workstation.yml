@@ -1,0 +1,8 @@
+---
+- hosts: workstation
+  become: true
+  environment: 
+    HOME: /home/ubuntu
+  tags: workstation
+  roles:
+     - workstation

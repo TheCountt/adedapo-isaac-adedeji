@@ -1,0 +1,94 @@
+---
+- name: Update ubuntu
+  ansible.builtin.apt:
+   update_cache: yes
+   force_apt_get: yes
+
+- name: download kubernetes, terraform  keys
+  apt_key: 
+   url: "{{ item }}"
+   state: present
+  loop:
+    - https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    - https://apt.releases.hashicorp.com/gpg
+
+- name: add kubernetes & terraform apt repositories
+  apt_repository: 
+   repo: "{{ item }}"
+   state: present
+  loop:
+    - "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+    - "deb https://apt.releases.hashicorp.com/ focal  main"
+  
+- name: install the following packages using apt_get
+  ansible.builtin.apt: 
+   name: "{{ item }}"
+   state: present
+   update_cache: yes
+   force_apt_get: yes
+  loop:
+    - curl
+    - ca-certificates
+    - apt-transport-https
+
+
+- name: install the following packages using apt
+  ansible.builtin.apt:
+   name: "{{ item }}"
+   state: present
+   update_cache: yes
+  loop: 
+    - fontconfig
+    - jq
+    - unzip
+    - docker.io
+    - docker-compose
+    - terraform=1.0.2
+
+- name: Download eksctl, helm, kubectl, aws-iam-authenticator
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+    timeout: 600
+  loop:
+    # - {url: "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_linux_amd64.tar.gz", dest: "/tmp/eksctl_linux_amd64.tar.gz"}
+    - {url: "https://get.helm.sh/helm-v3.10.0-linux-amd64.tar.gz", dest: "/tmp/helm-v3.10.0-linux-amd64.tar.gz"}
+    - {url: "https://s3.us-west-2.amazonaws.com/amazon-eks/1.21.2/2021-07-05/bin/linux/amd64/aws-iam-authenticator", dest: "/usr/local/bin"}
+    - {url: "https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kubectl", dest: "/usr/local/bin"}
+    
+- name: Unarchive the binary files
+  unarchive:
+    src: "{{ item.src}}"
+    dest: "{{ item.dest }}"
+  loop:
+    # - {src: "/tmp/eksctl_linux_amd64.tar.gz", dest: "/tmp"}
+    - {src: "/tmp/helm-v3.10.0-linux-amd64.tar.gz", dest: "/tmp"}
+
+
+- name: Locate  files to copy
+  ansible.builtin.find:
+    paths: /tmp/
+    recurse: yes
+    patterns: eksctl*,helm*
+  register: files_to_copy
+    
+- name: Copy found item(s)
+  ansible.builtin.copy:
+    src: "{{ item.path }}"
+    dest: /usr/local/bin/
+    owner: ubuntu
+    group: ubuntu
+    mode: '0755'
+    remote_src: yes
+  with_items: "{{ files_to_copy.files }}"
+
+- name: Change file ownership, group and permissions of kubectl & aws-iam-authenticator
+  ansible.builtin.file:
+    path: "/usr/local/bin/{{ item }}"
+    owner: ubuntu
+    group: ubuntu
+    mode: '755'
+  loop:
+    - kubectl
+    - aws-iam-authenticator
+

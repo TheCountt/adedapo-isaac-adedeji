@@ -1,0 +1,49 @@
+---
+##########   Community modules needed
+- name: Install needed community modules
+  community.general.ansible_galaxy_install:
+    type: collection
+    requirements_file: ./ansible-config/requirements.yml
+
+
+# Packages needed
+
+- import_tasks: packages.yml
+
+
+# Configure, start & enable docker
+
+# # docker configuration for non-root user
+- name: Create group "docker"
+  ansible.builtin.group:
+    name: docker
+    state: present
+
+
+- name: Add user to group 'docker'
+  ansible.builtin.user:
+    name: parallelscore
+    comment: Name of user to add to group docker
+    group: docker
+
+
+- name: Change file ownership, group and permissions
+  ansible.builtin.file:
+    path: $HOME/.docker
+    owner: parallelscore
+    group: parallelscore
+    recurse: yes
+    mode: '0777'
+
+- name: Change  permissions
+  ansible.builtin.file:
+    path: /var/run/docker.sock
+    mode: '0777'
+
+- name: start and enable docker
+  ansible.builtin.service:
+   name: docker
+   state: started
+   enabled: true
+   daemon_reload: yes
+  notify: Restart docker server

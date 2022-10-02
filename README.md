@@ -2,10 +2,10 @@
 
 To implement the infrastructure,a cloud managed kubernetes service(Elastic  Kubernetes Service) was provisioned on the cloud service provider(AWS) with an Infrastructure as Code tool called Terraform.
 
-**Note**: A configuration tool called Ansible was used to install and configure neccessary packages, CLI tools and softwares that will be needed by the Kubernetes cluster to work properly on workstation (Bastion server) that was spun up on cloud(AWS) 
+**Note**: A configuration tool called Ansible was used to install and configure neccessary packages, CLI tools and softwares that will be needed by the Kubernetes cluster to work properly on the workstation (Bastion server) that was spun up on cloud(AWS) 
 
 ## Pre-requisite Knowledge
-- Knowledge of cloud service provider (AWS, Azure, GCP,etc)
+- Knowledge of cloud service providers (AWS, Azure, GCP,etc)
 - Proficience in Terraform (Infrastructure Provision)
 - Proficience in Ansible (Configuration Management)
 - Knowledge of Docker (Containerization)

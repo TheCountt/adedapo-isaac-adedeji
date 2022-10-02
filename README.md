@@ -1,46 +1,56 @@
-# ci/cd pipeline still in progress....
-## Tools: Jenkins, Ansible, Packer, Terraform, Sonarqube, Grype, Docker
+# Implementation of an Integrated Infrastructure
+
+To implement the infrastructure,a cloud managed kubernetes service(Elastic  Kubernetes Service) was provisioned on the cloud service provider(AWS) with an Infrastructure as Code tool called Terraform.
+
+**Note**: A configuration tool called Ansible was used to install and configure neccessary packages, CLI tools and softwares that will be needed by the Kubernetes cluster to work properly on workstation (Bastion server) that was spun up on cloud(AWS) 
 
 ## Pre-requisite Knowledge
-- Proficient in Ansible
-- Proficient in Jenkins
-- Knowledge of CI/CD Workflow
+- Knowledge of cloud service provider (AWS, Azure, GCP,etc)
+- Proficience in Terraform (Infrastructure Provision)
+- Proficience in Ansible (Configuration Management)
+- Knowledge of Docker (Containerization)
+- Knowledge of Kubernetes (Container Orchestration)
+- Knowledge of Helm (Package Manager for Kubernetes)
 
-**Automating Jenkins and Sonarqube Set-up with Ansible**
+## Incorporated Technologies include:
+- Grafana and Prometheus (Monitoring)
+- Apisix (Security)
+- Dapr (Configuration)
+- yugabyteDB (Data Management Storage)
+- Kubeflow (Data Science and AI)
+- Docker (Application)
+- Kafka (Communication)
+- Superset (Visualization)
 
-- Servers to be provisioned should have the following requirements: 
-        - atleast 4GB RAM
-        - atleast 15 GB Disk Space
 
-- Configure SSH Agent on Bastion Server(CI Server). Research on SSH Agent if not clear
+## Steps
 
-- Install Ansible version 2.10 or above on Bastion Server
+- Install and configure Ansible version 2.10 or above on workstation (Use Ansible documentation)
 
-- Write ansible playbooks to install and configure other necessary softwares for the CI environment e.g Jenkins, etc.
+- Write ansible scripts to install and configure other necessary softwares, dependencies and CLI tools on workstation (Check ansible scripts for reference)
 
-*Note*: Check Jenkins and Sonarqube Documentations on how to install manually.
-Note down the steps and automate with Ansible.
+*Note*: Structure ansible folders and files to accommodate code expansion and for easy understanding upon inheritance
 
-**Plugins Installed in Jenkins**
--	Blue Ocean
--	Bitbucket
--	Ansible
--	Maven (pre-installed in Jenkins)
--	Git (pre-installed in Jenkins)
--	Sonarqube
--	Junit (preinstalled in Jenkins)
--       Docker
--       Cloudbees Docker build and Push
--       Grype Scanner(Anchore is deprecated)
--       Kubernetes
--       Http Request
--       Terraform
+- Run ansible playbook file against the inventory file
 
-**Credentials to create in Jenkins**
--   bitbucket credentials
--   ssh credentials
--   sonarqube token
--   dockerhub login credentials
+- A file was created to house the terraform scripts
+
+- Programmatic access to AWS was given to the workstation so resources can be created in AWS by Terraform 
+
+- A Kubernetes cluster was provisioned using Terraform
+
+- Helm CLI was then used to deploy the desired technologies.
+
+**Note**:
+
+        - Kubernetes packages specified in the documentation of the technologies and Artifact Hub(A web-based application that enables finding, installing, and publishing Kubernetes packages) were the helm charts repositories used
+
+        - Neccessary ports of the technologies deployed were opened on the workstation to be able  to route traffic.
+
+
+
+
+
 
 
 

@@ -49,6 +49,15 @@ To implement the infrastructure,a cloud managed kubernetes service(Elastic  Kube
 
 
 
+<img width="658" alt="Screenshot 2022-10-02 215009" src="https://user-images.githubusercontent.com/76074379/193512762-c33bff65-72f7-4a5e-9bf2-17a201657346.png">
+
+
+<img width="786" alt="Screenshot 2022-10-02 215041" src="https://user-images.githubusercontent.com/76074379/193512856-393657aa-d6a7-4cb9-9159-92bb4732e355.png">
+
+<img width="753" alt="Screenshot 2022-10-02 215115" src="https://user-images.githubusercontent.com/76074379/193512917-5c864dbb-d34c-4126-8ac6-57180c6ef2b2.png">
+
+<img width="587" alt="Screenshot 2022-10-02 215138" src="https://user-images.githubusercontent.com/76074379/193512978-5ebea171-1c8b-4be8-8d9d-b5a42aa1a208.png">
+
 
 
 
